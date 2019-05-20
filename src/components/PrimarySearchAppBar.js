@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +16,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button'
+import FormDialog from './FormDialog(login)';
 
 const styles = theme => ({
   root: {
@@ -86,10 +89,12 @@ const styles = theme => ({
   },
 });
 
-class Navigation extends Component {
+class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
+    catalogCards: [],
+    filteredCards: []
   };
 
   handleProfileMenuOpen = event => {
@@ -108,6 +113,13 @@ class Navigation extends Component {
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
+  searchHandler = (e) => {
+    const filtered = this.state.catalogCards.filter(card => {  
+      return card.h2.toLowerCase().includes(e.target.value.toLowerCase()) || card.p.toLowerCase().includes(e.target.value.toLowerCase()) 
+    })
+    this.setState({ filteredCards: filtered})
+}
+  
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -138,7 +150,7 @@ class Navigation extends Component {
       >
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
+            <Badge badgeContent={4} color="secondary">
               <MailIcon />
             </Badge>
           </IconButton>
@@ -146,7 +158,7 @@ class Navigation extends Component {
         </MenuItem>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
+            <Badge badgeContent={11} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -169,7 +181,7 @@ class Navigation extends Component {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Material-UI
+              Restaurant Passport 
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -177,6 +189,7 @@ class Navigation extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
+                onChange={this.searchHandler}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -185,16 +198,7 @@ class Navigation extends Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={1} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={1} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+            <FormDialog />
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
@@ -218,4 +222,8 @@ class Navigation extends Component {
   }
 }
 
-export default withStyles(styles)(Navigation);
+PrimarySearchAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(PrimarySearchAppBar);

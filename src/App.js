@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Navigation from './components/navigation/Navigation';
+import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import PostPage from './components/catalog/PostPage';
 
 class App extends Component {
@@ -9,12 +9,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <PostPage />
-          <Navigation />
-          <Route exact path="/" />
-          <Route path="/catalog" />
-          <Route path={`/catalog/postpage:id`} />
-          <Route path={`/profilepage/:id`} />
+          <PrimarySearchAppBar />
         </div>
       </Router>
     );
