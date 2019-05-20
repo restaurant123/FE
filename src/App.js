@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
-import PostPage from './components/catalog/PostPage';
+import PostPage from './components/postpage/PostPage';
 import Catalog from './components/Catalog';
+import CatalogGrid from './components/CatalogGrid';
 
 class App extends Component {
   render() {
@@ -11,7 +12,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <PrimarySearchAppBar />
-          <Catalog />
+          <Route exact path="/" component={CatalogGrid} />
+          <Route path="/postpage/:id" />
+          <Route path="/profile-page/:id" />
         </div>
       </Router>
     );
