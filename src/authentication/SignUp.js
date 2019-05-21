@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 export default class SignUp extends Component {
     state = {
-        name: '',
-        email: '',
+        username: '',
         password: '',
+        email: '',
         address: '',
         city: '',
         state: '',
@@ -15,10 +15,10 @@ export default class SignUp extends Component {
 
     changeHandler = e => this.setState({ [e.target.name]: e.target.value });
     submitDataHandler = e => {
-        const name = this.state.name;
+        const username = this.state.username;
         const password = this.state.password;
         const userInfo = {
-          "email": this.state.email,
+          "email": this.state.username,
           "password": this.state.password
         }
         axios.post('https://restaurant-passport2019.herokuapp.com/users/register', userInfo)
@@ -33,7 +33,7 @@ export default class SignUp extends Component {
     return (
       <div className='login'>
         <form className='loginForm'>
-            <h2 className='logo'>Resaurant Passport</h2>
+            <h2 className='logo'>Restaurant Passport</h2>
             <input className='loginInput' type='text' placeholder='Name' onChange={this.changeHandler} required />
             <input className='loginInput' type='text' placeholder='Email' onChange={this.changeHandler} required />
             <input className='loginInput' type='password' placeholder='Password' onChange={this.changeHandler} required />

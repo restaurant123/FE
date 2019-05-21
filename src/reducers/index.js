@@ -1,4 +1,4 @@
-import { GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE, GET_POST, GET_POST_SUCCESS, GET_POST_FAILURE, ADD_POST, ADD_POST_SUCCESS, ADD_POST_FAILURE, DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE, EDIT_POST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE } from '../actions';
+import { GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE, GET_POST, GET_POST_SUCCESS, GET_POST_FAILURE, ADD_POST, ADD_POST_SUCCESS, ADD_POST_FAILURE, DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE, EDIT_POST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE, SEARCH } from '../actions';
 
 const initialState = {
   posts: [],
@@ -103,11 +103,11 @@ const reducer = (state = initialState, action) => {
       editingPost: false,
       error: action.payload
     }
-    // case SEARCH:
-    // return {
-    //   ...state,
-    //   posts: state.posts.filter(post => post.includes(action.payload))
-    // }
+    case SEARCH:
+    return {
+      ...state,
+      posts: state.posts.filter(post => post.includes(action.payload))
+    }
     default:
       return state;
   }
