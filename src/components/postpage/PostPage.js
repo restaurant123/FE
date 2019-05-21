@@ -6,8 +6,8 @@ class PostPage extends Component {
     return (
       <div className="postpage-container">
         <header className="postpage-header">
-          <h2>Name of Item</h2>
-          <h3>Price of Item</h3>
+          <h2>Name of Restaurant</h2>
+          <h3>City</h3>
           <h4>lorem</h4>
         </header>
       </div>

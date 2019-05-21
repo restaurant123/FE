@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import PrimarySearchAppBar from './components/PrimarySearchAppBar';
+import { Route } from 'react-router-dom';
 import PostPage from './components/postpage/PostPage';
 import CatalogGrid from './components/CatalogGrid';
 import authenticate from './authentication/authenticate';
+import SignUp from './authentication/SignUp';
+import Login from './authentication/Login';
+import PrimarySearchAppBar from './components/PrimarySearchAppBar';
+
 
 class App extends Component {
   render() {
     return (
-      <Router>
         <div className="App">
           <PrimarySearchAppBar />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path='/login' render={props => <Login {...props} />} />
           <Route exact path="/" component={CatalogGrid} />
-          <Route path="/postpage/:id" component={PostPage} />
-          <Route path="/profile-page/:id" />
+          <Route path="/postpages/:id" component={PostPage} />
         </div>
-      </Router>
     );
   }
 }
