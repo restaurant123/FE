@@ -3,8 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import PostPage from './components/postpage/PostPage';
-import Catalog from './components/Catalog';
 import CatalogGrid from './components/CatalogGrid';
+import authenticate from './authentication/authenticate';
 
 class App extends Component {
   render() {
@@ -21,4 +21,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default authenticate(App);
