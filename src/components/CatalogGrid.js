@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -54,37 +55,53 @@ const tileData = [{"id":1,"item_name":"Gecko, barking","description":"Reposition
 {"id":19,"item_name":"Loris, slender","description":"Drainage of Left Upper Eyelid, Percutaneous Approach","price":"502","image":"http://dummyimage.com/601x242.jpg/dddddd/000000"},
 {"id":20,"item_name":"Giant girdled lizard","description":"Resection of Sigmoid Colon, Percutaneous Endoscopic Approach","price":"489","image":"http://dummyimage.com/962x578.bmp/dddddd/000000"}];
 
-function AdvancedGridList(props) {
-  const { classes } = props;
+class AdvancedGridList extends Component {
+ 
+  componentDidMount() {
+    this.props.getPosts();
+    console.log(this.props)
+  }
 
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={300} spacing={1} className={classes.gridList}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.image} cols={.5} rows={1}>
-            <img src={tile.image} alt={tile.item_name} />
-          <Link to ={`/postpage/${tile.id}`} >
-            <GridListTileBar
-              title={tile.item_name}
-              titlePosition="top"
-              actionIcon={
-                <IconButton className={classes.icon}>
-                  <StarBorderIcon />
-                </IconButton>
-              }
-              actionPosition="left"
-              className={classes.titleBar}
-            />
-           </Link>
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
-  );
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <GridList cellHeight={300} spacing={1} className={classes.gridList}>
+          {tileData.map(tile => (
+            <GridListTile key={tile.image} cols={.5} rows={1}>
+              <img src={tile.image} alt={tile.item_name} />
+            <Link to ={`/postpage/${tile.id}`} >
+              <GridListTileBar
+                title={tile.item_name}
+                titlePosition="top"
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <StarBorderIcon />
+                  </IconButton>
+                }
+                actionPosition="left"
+                className={classes.titleBar}
+              />
+             </Link>
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  } 
 }
+
+const styledComponent = withStyles(styles)(AdvancedGridList);
+
+const mapStateToProps = state => ({
+  posts: state.posts,
+  fetchingPosts: state.fetchingPosts,
+  error: state.error
+})
 
 AdvancedGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AdvancedGridList);
+export default connect(mapStateToProps, { getPosts })(styledComponent);

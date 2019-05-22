@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Route } from 'react-router-dom';
-import PostPage from './components/postpage/PostPage';
-import CatalogGrid from './components/CatalogGrid';
-import authenticate from './authentication/authenticate';
-import SignUp from './authentication/SignUp';
-import Login from './authentication/Login';
-import PrimarySearchAppBar from './components/PrimarySearchAppBar';
+import React from 'react';
+import {Route, Link} from 'react-router-dom';
+import PrivateRoute from './utils/PrivateRoute'
+import Login from './components/Login'
+import Restaurants from './components/Restaurants';
 
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        Test
+      </header>
 
-class App extends Component {
-  render() {
-    return (
-        <div className="App">
-          <PrimarySearchAppBar />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path='/login' render={props => <Login {...props} />} />
-          <Route exact path="/" component={CatalogGrid} />
-          <Route path="/postpages/:id" component={PostPage} />
-        </div>
-    );
-  }
+      <Link to='/login'>Login</Link>
+
+      <PrivateRoute exact path='/restaurants' component={Restaurants} />
+      <Route path='/login' component={Login}/>
+
+      
+    </div>
+  );
 }
 
-export default authenticate(App);
+export default App;

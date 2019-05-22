@@ -1,0 +1,62 @@
+@import url('https://fonts.google.com/?query=open+sans&selection.family=Open+Sans');
+
+.login{
+    max-width: 642px;
+    margin: auto;
+    padding: 1%;
+    background-color: black;
+    border-radius: 12px;
+    margin-top: 9vh;
+}
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5%;
+    border-radius: 12px;
+    background-color: blueviolet;
+    border: 8px solid white;
+}
+
+.loginInput{
+    text-align: center;
+    border-radius: 4px;
+    width: 250px;
+    margin: 1% 0;
+    color:#ffa500;
+    font-weight: bolder;
+}
+
+.loginBtn{
+    text-align: center;
+    border-radius: 4px;
+    width: 250px;
+    margin-top: 1%;
+    background-color: #ffa500;
+    color: white;
+    font-weight: bolder;
+}
+
+.logo{
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: white;
+    /* border-bottom: 4px solid #ffa500; */
+    border-radius: 50%;
+    margin-bottom: 3%;
+}
+
+.signUP{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+  
+  
+  
+}
+
+.signUP:hover{
+    color:#ffa500;
+    border-color: white;
+}

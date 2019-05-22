@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Login from './Login';
 
@@ -11,7 +12,7 @@ const authenticate = App =>
     }
 
     componentDidMount(){
-      if (localStorage.getItem('jwt') ){
+      if ( (localStorage.getItem('username')) && (localStorage.getItem('password')) ){
         this.setState({
           loggedIn: true
         })
