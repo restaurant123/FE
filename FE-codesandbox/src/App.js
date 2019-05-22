@@ -6,6 +6,8 @@ import PrimarySearchAppBar from './components/PrimarySearchAppBar'
 import CatalogGrid from './components/CatalogGrid';
 import ProfilePage from './components/ProfilePage';
 import authenticate from './authentication/authenticate';
+import Login from './authentication/Login';
+import MediaCard from './components/MediaCard';
 
 
 class App extends Component {
@@ -15,6 +17,8 @@ class App extends Component {
         <div className="App">
           <PrimarySearchAppBar/>
           <Route exact path="/" component={CatalogGrid} />
+          <Route exact path="/login" component={Login} />
+          {/* <Route exact path="/postpage" component={MediaCard} /> */}
           <Route path="/postpages/:id" component={PostPage}/>
           <Route path="/profile-page/:id" component={ProfilePage}/>
         </div>
