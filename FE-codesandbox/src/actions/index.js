@@ -10,7 +10,7 @@ export const getPosts = () => dispatch => {
   .get('https://restaurant-passport2019.herokuapp.com/restaurants')
   .then(res => {
     console.log(res);
-    dispatch({ type: GET_POSTS_SUCCESS, payload: res.data.data })
+    dispatch({ type: GET_POSTS_SUCCESS, payload: res.data })
   })
   .catch(err => {
     console.log(err)

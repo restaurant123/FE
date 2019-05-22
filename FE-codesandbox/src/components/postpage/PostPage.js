@@ -7,10 +7,12 @@ class PostPage extends Component {
   state = {
     post: {
       name: '',
-      price: '',
-      location: '',
-      description: '',
-      image: ''
+      address: '',
+      city: '',
+      state: '',
+      image: '',
+      description:'',
+      visited:'',
     }
   }
 
@@ -20,12 +22,12 @@ class PostPage extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.posts !== this.props.posts) {
-      const thisPost = this.props.posts.find(post => post._id === this.props.match.params.id)
+      const thisPost = this.props.posts.find(post => post.id === this.props.match.params.id)
       this.setState({ post: {
-        name: thisPost.postTitle,
-        price: 1121,
+        name: thisPost.name,
+        visited: thisPost.visited,
         description: thisPost.description,
-        location: `${thisPost.city}, ${thisPost.state} ${thisPost.zip}`
+        location: `${thisPost.city}, ${thisPost.state} ${thisPost.zipCode}`
       } })
       console.log(thisPost)
     }
@@ -36,8 +38,8 @@ class PostPage extends Component {
       <div className="postpage-container">
         <header className="postpage-header">
           <h2>{this.state.post.name}</h2>
-          <h3>${this.state.post.price}</h3>
-          <h4>{this.state.post.location}</h4>
+          <h3>${this.state.post.city}</h3>
+          <h4>{this.state.post.visited}</h4>
         </header>
         <article className="postpage-content">
           <img src={this.state.post.image} alt={this.state.post.name} />
