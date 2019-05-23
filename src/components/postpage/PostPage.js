@@ -38,16 +38,22 @@ class PostPage extends Component {
     if (this.props.post.id !== this.props.match.params.id) {
       this.props.getPost(this.props.match.params.id);  
     }
+    else {
+      this.setState({ post: {
+        name: this.props.post.name,
+        city: this.props.post.city,
+        address: this.props.post.address,
+        description: this.props.post.description,
+        visited: this.props.post.visited,
+        image: this.props.post.image_url,
+        location: `${this.props.post.city}, ${this.props.post.state} ${this.props.post.zipCode}`
+      }})
+    }
   }
 
   deletePost = id => {
     this.props.deletePost(id);
     this.props.history.push('/')
-  }
-
-  editPost = (e, post) => {
-    e.preventDefault();
-    this.props.editPost(post);
   }
 
   componentDidUpdate(prevProps) {
