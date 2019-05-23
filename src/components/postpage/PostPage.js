@@ -26,7 +26,7 @@ class PostPage extends Component {
       address: '',
       city: '',
       state: '',
-      image: '',
+      image_url: '',
       category: '',
       description:'',
       visited:'',
@@ -46,7 +46,7 @@ class PostPage extends Component {
         address: this.props.post.address,
         description: this.props.post.description,
         visited: this.props.post.visited,
-        image: this.props.post.image_url,
+        image_url: this.props.post.image_url,
         location: `${this.props.post.city}, ${this.props.post.state} ${this.props.post.zipCode}`
       }})
     }
@@ -66,7 +66,7 @@ class PostPage extends Component {
         address: post.address,
         description: post.description,
         visited: post.visited,
-        image: post.image_url,
+        image_url: post.image_url,
         location: `${post.city}, ${post.state} ${post.zipCode}`
       } })
     }
@@ -94,7 +94,7 @@ class PostPage extends Component {
           <h4>{this.state.post.location}</h4>
         </header>
         <article className="postpage-content">
-          <img src={this.state.post.image} alt={this.state.post.name} />
+          <img src={this.state.post.image_url} alt={this.state.post.name} />
           <h4>Visited: {this.state.post.visited}</h4>
           <br/>
           <p>{this.state.post.description} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>

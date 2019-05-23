@@ -149,7 +149,7 @@ class EditForm extends Component {
           variant="filled"
           onChange={this.handleInputChange}
           value={this.state.post.image_url}
-          name="image"
+          name="image_url"
           required
           />
 

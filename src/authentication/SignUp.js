@@ -44,13 +44,13 @@ class SignUp extends Component {
         <form className='loginForm' onSubmit={this.submitDataHandler}>
             <h2 className='logo'>Restaurant Passport</h2>
             <input className='loginInput' name="name" type='name' placeholder='Name' onChange={this.changeHandler} required />
-            <input className='loginInput' name="email" type='text' placeholder='Email' onChange={this.changeHandler} required />
-            <input className='loginInput' name="password" type='password' placeholder='Password' onChange={this.changeHandler} required />
+            <input className='loginInput' name="email" value={this.state.userInfo.email} type='text' placeholder='Email' onChange={this.changeHandler} required />
+            <input className='loginInput' name="password" value={this.state.userInfo.password} type='password' placeholder='Password' onChange={this.changeHandler} required />
             <input className='loginInput' name="address" type='address' placeholder='Address' onChange={this.changeHandler} required />
             <input className='loginInput' name="city" type='city' placeholder='City' onChange={this.changeHandler} required />
             <input className='loginInput' name="state" type='state' placeholder='State' onChange={this.changeHandler} required />
             <input className='loginInput' name="zipCode" type='zipCode' placeholder='zipCode' onChange={this.changeHandler} required />
-            <button className='loginBtn'  onClick={this.submitDataHandler}>Sign Up</button>
+            <button className='loginBtn'>Sign Up</button>
             <br/>
             <p className='p'>Already Have an Account?</p>
             <Link to="/signin">

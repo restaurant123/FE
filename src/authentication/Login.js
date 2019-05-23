@@ -41,8 +41,8 @@ class Login extends Component {
       <div className='login'>
         <form className='loginForm' onSubmit={this.submitDataHandler}>
             <h2 className='logo'>Restaurant Passport</h2>
-            <input className='loginInput' type='text' placeholder='Email' onChange={this.changeUserNameHandler} required />
-            <input className='loginInput' type='password' placeholder='Password' onChange={this.changePasswordHandler} required />
+            <input className='loginInput' type='text' placeholder='Email' onChange={this.changeUserNameHandler} value={this.state.userInfo.email} required />
+            <input className='loginInput' type='password' placeholder='Password' value={this.state.userInfo.password} onChange={this.changePasswordHandler} required />
             <button className='loginBtn'>Log In</button>
             <br/>
             <p className='p'>Dont Have an Account?</p>
