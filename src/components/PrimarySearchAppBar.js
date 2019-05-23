@@ -18,7 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button'
 import FormDialog from './FormDialog(login)';
-import { searchBar } from '../actions';
+import { searchBar, getPosts } from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -129,6 +129,9 @@ class PrimarySearchAppBar extends React.Component {
   searchSubmit = (e, searchedPost) => {
     e.preventDefault();
     this.props.searchBar(searchedPost);
+    if (searchedPost.length === 0) {
+      this.props.getPosts();
+    }
   }
   
 
@@ -198,17 +201,17 @@ class PrimarySearchAppBar extends React.Component {
                 <div className={classes.searchIcon}>
                   <SearchIcon />
                 </div>
-                <InputBase
-                  onSubmit={e => this.searchSubmit(e, this.state.searched)}
-                  onChange={e=> this.searchSubmit(e, this.state.searched)}
-                  value={this.state.searched}
-                  placeholder="Search…"
-                  onChange={this.searchHandler}
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                />
+                <form onSubmit={e => this.searchSubmit(e, this.state.searched)}>
+                  <InputBase
+                    value={this.state.searched}
+                    placeholder="Search…"
+                    onChange={this.searchHandler}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </form>
               </div>
             </div>
             <div className={classes.grow} />
@@ -249,4 +252,4 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapDispatchToProps, { searchBar })(styledSearchBar);
+export default connect(null, { searchBar, getPosts })(styledSearchBar);
