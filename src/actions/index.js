@@ -111,5 +111,5 @@ export const editProfile = profile => dispatch => {
 export const SEARCH = 'SEARCH';
 
 export const searchBar = post => {
-  return {type: SEARCH, post}
+  return {type: SEARCH, payload: post}
 }

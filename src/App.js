@@ -16,13 +16,12 @@ import EditForm from './components/postpage/EditForm';
 class App extends Component {
   render() {
     return (
-      
         <div className="App">
           <PrimarySearchAppBar/>
-          <Route exact path="/" component={CatalogGrid} />
-          <Route exact path="/signup" component={SignUp} />
+          {/* <Route exact path="/signup" component={SignUp} /> */}
           <Route exact path='/login' render={props => <Login {...props} />} />
           {/* <Route exact path="/postpage" component={MediaCard} /> */}
+          <Route exact path="/" component={CatalogGrid} />
           <Route path="/postpages/:id" component={PostPage}/>
           <Route path="/profile-page/:id" component={ProfilePage}/>
           <Route path="/postform" component={PostForm}/>
