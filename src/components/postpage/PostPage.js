@@ -95,6 +95,7 @@ class PostPage extends Component {
         <article className="postpage-content">
           <img src={this.state.post.image} alt={this.state.post.name} />
           <h4>Visited: {this.state.post.visited}</h4>
+          <br/>
           <p>{this.state.post.description} Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </article>
       </div>

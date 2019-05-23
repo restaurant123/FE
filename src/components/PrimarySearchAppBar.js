@@ -18,7 +18,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button'
 import FormDialog from './FormDialog(login)';
-
+import { searchBar } from '../actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
 const styles = theme => ({
   root: {
@@ -94,8 +97,7 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
-    catalogCards: [],
-    filteredCards: []
+    searched:''
   };
   
   componentDidMount() {
@@ -119,12 +121,15 @@ class PrimarySearchAppBar extends React.Component {
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
+
   searchHandler = e => {
-    const filtered = this.state.catalogCards.filter(card => {  
-      return card.h2.toLowerCase().includes(e.target.value.toLowerCase()) || card.p.toLowerCase().includes(e.target.value.toLowerCase()) 
-    })
-    this.setState({ filteredCards: filtered})
-}
+    this.setState({ searched: e.target.value })
+  }
+
+  searchSubmit = (e, searchedPost) => {
+    e.preventDefault();
+    this.props.searchBar(searchedPost);
+  }
   
 
   render() {
@@ -187,7 +192,7 @@ class PrimarySearchAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Restaurant Passport
+              <Link to='/' className='passportLink'>Restaurant Passport </Link>
             </Typography>
             <div className='searchBar'>
               <div className={classes.search}>
@@ -195,6 +200,8 @@ class PrimarySearchAppBar extends React.Component {
                   <SearchIcon />
                 </div>
                 <InputBase
+                  onSubmit={e => this.searchSubmit(this.state.searched)}
+                  value={this.state.searched}
                   placeholder="Search…"
                   onChange={this.searchHandler}
                   classes={{
@@ -232,8 +239,14 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
+const styledSearchBar = withStyles(styles)(PrimarySearchAppBar);
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({searchBar}, dispatch);
+}
+
 PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default connect(mapDispatchToProps, { searchBar })(styledSearchBar);

@@ -51,7 +51,7 @@ class SignUp extends Component {
             <input className='loginInput' name="zipCode" type='zipCode' placeholder='zipCode' onChange={this.changeHandler} required />
             <button className='loginBtn'  onClick={this.submitDataHandler}>Sign Up</button>
             <br/>
-            <p>Already Have an Account?</p>
+            <p className='p'>Already Have an Account?</p>
             <p className='signUP' onClick={this.props.toggler}>Log In</p>
         </form>
       </div>

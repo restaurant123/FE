@@ -108,8 +108,8 @@ export const editProfile = profile => dispatch => {
     })
 }
 
-// export const SEARCH = 'SEARCH';
+export const SEARCH = 'SEARCH';
 
-// export const searchBar = post => {
-//   return {type: SEARCH, post}
-// }
+export const searchBar = post => {
+  return {type: SEARCH, post}
+}
