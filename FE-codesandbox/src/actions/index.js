@@ -39,7 +39,7 @@ export const getPost = id => dispatch => {
 
   //Add a new post
 export const ADD_POST = "ADD_POST";
-export const ADD_POST_SUCCESS = " ADD_POST_SUCCESS";
+export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 export const addPost = post => dispatch => {
   dispatch({ type: ADD_POST })

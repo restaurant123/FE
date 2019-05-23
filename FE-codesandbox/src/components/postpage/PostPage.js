@@ -46,7 +46,9 @@ class PostPage extends Component {
         city: post.city,
         address: post.address,
         description: post.description,
-        location: `${post.city}, ${post.state} ${post.zip}`
+        visited: post.visited,
+        image: post.image_url,
+        location: `${post.city}, ${post.state} ${post.zipCode}`
       } })
     }
   }
@@ -68,8 +70,8 @@ class PostPage extends Component {
               <DeleteIcon />
             </Fab>
           </div>
-          <h3>{this.state.post.city} </h3>
-          <h3>{this.state.post.visited}</h3>
+          {/* <h3>{this.state.post.city} </h3> */}
+          {/* <h3>{this.state.post.visited}</h3> */}
           <h4>{this.state.post.location}</h4>
         </header>
         <article className="postpage-content">
