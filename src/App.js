@@ -10,6 +10,7 @@ import Login from './authentication/Login';
 import SignUp from './authentication/SignUp';
 import MediaCard from './components/MediaCard';
 import PostForm from './components/postpage/PostForm';
+import EditForm from './components/postpage/EditForm';
 
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path="/postpages/:id" component={PostPage}/>
           <Route path="/profile-page/:id" component={ProfilePage}/>
           <Route path="/postform" component={PostForm}/>
+          <Route path="/editform" component={EditForm} />
         </div>
       
     );

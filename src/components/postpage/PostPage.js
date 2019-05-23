@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './PostPage.css';
 import { connect } from 'react-redux';
-import { getPost } from '../../actions';
+import { getPost, deletePost } from '../../actions';
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
@@ -35,7 +35,19 @@ class PostPage extends Component {
   }
 
   componentDidMount() {
-    this.props.getPost(this.props.match.params.id)
+    if (this.props.post.id !== this.props.match.params.id) {
+      this.props.getPost(this.props.match.params.id);  
+    }
+  }
+
+  deletePost = id => {
+    this.props.deletePost(id);
+    this.props.history.push('/')
+  }
+
+  editPost = (e, post) => {
+    e.preventDefault();
+    this.props.editPost(post);
   }
 
   componentDidUpdate(prevProps) {
@@ -63,10 +75,10 @@ class PostPage extends Component {
             <Fab color="primary" aria-label="Add" size="large" className={classes.fab} component={Link} to="/postform">
               <AddIcon />
             </Fab>
-            <Fab color="secondary" aria-label="Edit" className={classes.fab} component={Link} to="/">
+            <Fab color="secondary" aria-label="Edit" className={classes.fab} component={Link} to="/editform">
               <EditIcon></EditIcon>
             </Fab>
-            <Fab aria-label="Delete" className={classes.fab}>
+            <Fab aria-label="Delete" className={classes.fab} onClick={() => this.deletePost(this.props.match.params.id)}>
               <DeleteIcon />
             </Fab>
           </div>
@@ -91,4 +103,4 @@ const mapStateToProps = state => ({
 })
 
 const PostPageStyles = withStyles(styles)(PostPage);
-export default connect(mapStateToProps, { getPost })(PostPageStyles);
+export default connect(mapStateToProps, { getPost, deletePost })(PostPageStyles);
