@@ -3,7 +3,8 @@ import './login.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SignUp from './SignUp';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toggleSignedIn } from '../actions';
 
 class Login extends Component {
     constructor() {
@@ -28,7 +29,8 @@ class Login extends Component {
           console.log(res);
           localStorage.setItem('jwt', res.data.token);
           // window.location.reload()
-          this.props.history.push('/')
+          this.props.toggleSignedIn();
+          this.props.history.push('/');
         })
         .catch(err => {
           console.log(err);
@@ -57,4 +59,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, { toggleSignedIn })(Login);
