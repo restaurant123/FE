@@ -19,11 +19,11 @@ class App extends Component {
         <div className="App">
           <PrimarySearchAppBar/>
           {/* <Route exact path="/signup" component={SignUp} /> */}
-          {/* <Route exact path='/login' render={props => <Login {...props} />} /> */}
+          <Route path='/login' component={Login}/>
           {/* <Route exact path="/postpage" component={MediaCard} /> */}
           <Route exact path="/" component={CatalogGrid} />
           <Route path="/postpages/:id" component={PostPage}/>
-          <Route path="/profile-page/:id" component={ProfilePage}/>
+          <Route exact path="/:username" component={ProfilePage}/>
           <Route path="/postform" component={PostForm}/>
           <Route path="/editform" component={EditForm} />
         </div>

@@ -99,9 +99,9 @@ export const EDIT_PROFILE_FAILURE = 'EDIT_PROFILE_FAILURE';
 export const editProfile = profile => dispatch => {
     dispatch({ type: EDIT_PROFILE })
     axios
-    .put(``, profile)
+    .put(`https://restaurant-passport2019.herokuapp.com/users/${profile.id}`, profile)
     .then(res => {
-    dispatch({ type: EDIT_PROFILE_SUCCESS, payload: res.data })
+        dispatch({ type: EDIT_PROFILE_SUCCESS, payload: res.data })
     })
     .catch(err => {
         dispatch({ type: EDIT_PROFILE_FAILURE, payload: err.message })

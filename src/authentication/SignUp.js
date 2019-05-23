@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
+import { Popover } from '@material-ui/core';
+
 
 class SignUp extends Component {
     state = {
@@ -30,6 +32,7 @@ class SignUp extends Component {
           console.log(res);
           localStorage.setItem('jwt', res.data.token)
           this.props.history.push('/')
+          alert('Successfully Signed Up! You will now be Logged In')
         })
         .catch(err => {
           console.log(err);
@@ -38,7 +41,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className='login'>
-        <form className='loginForm'>
+        <form className='loginForm' onSubmit={this.submitDataHandler}>
             <h2 className='logo'>Restaurant Passport</h2>
             <input className='loginInput' name="name" type='name' placeholder='Name' onChange={this.changeHandler} required />
             <input className='loginInput' name="email" type='text' placeholder='Email' onChange={this.changeHandler} required />
