@@ -1,46 +1,76 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getPosts } from '../../actions';
 import './PostPage.css';
+import { connect } from 'react-redux';
+import { getPost } from '../../actions';
+import { Link } from 'react-router-dom'
+import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const styles = theme => ({
+  fab: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class PostPage extends Component {
   state = {
     post: {
       name: '',
+      stars:'',
       address: '',
       city: '',
       state: '',
       image: '',
+      category: '',
       description:'',
       visited:'',
-      stars:''
+    
     }
   }
 
   componentDidMount() {
-    this.props.getPosts()
+    this.props.getPost(this.props.match.params.id)
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.posts !== this.props.posts) {
-      const thisPost = this.props.posts.find(post => post.id === this.props.match.params.id)
+    if (prevProps.post !== this.props.post) {
+      const post = this.props.post;
       this.setState({ post: {
-        name: thisPost.name,
-        stars: 5,
-        description: thisPost.description,
-        location: `${thisPost.city}, ${thisPost.state} ${thisPost.zipCode}`
+        name: post.name,
+        city: post.city,
+        address: post.address,
+        description: post.description,
+        location: `${post.city}, ${post.state} ${post.zip}`
       } })
-      console.log(thisPost)
     }
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div className="postpage-container">
         <header className="postpage-header">
-          <h2>{this.state.post.name}</h2>
-          <h3>${this.state.post.stars}</h3>
-          <h4>{this.state.post.visited}</h4>
+          <div className="title-container">
+            <h2>{this.state.post.name}</h2>
+            <Fab color="primary" aria-label="Add" size="large" className={classes.fab} component={Link} to="/postform">
+              <AddIcon />
+            </Fab>
+            <Fab color="secondary" aria-label="Edit" className={classes.fab} component={Link} to="/">
+              <EditIcon></EditIcon>
+            </Fab>
+            <Fab aria-label="Delete" className={classes.fab}>
+              <DeleteIcon />
+            </Fab>
+          </div>
+          <h3>{this.state.post.city} </h3>
+          <h3>{this.state.post.visited}</h3>
+          <h4>{this.state.post.location}</h4>
         </header>
         <article className="postpage-content">
           <img src={this.state.post.image} alt={this.state.post.name} />
@@ -52,9 +82,10 @@ class PostPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts,
+  post: state.post,
   fetchingPosts: state.fetchingPosts,
   error: state.error
 })
 
-export default connect(mapStateToProps, { getPosts })(PostPage)
+const PostPageStyles = withStyles(styles)(PostPage);
+export default connect(mapStateToProps, { getPost })(PostPageStyles);

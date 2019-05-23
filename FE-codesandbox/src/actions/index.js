@@ -18,6 +18,23 @@ export const getPosts = () => dispatch => {
   })
 }
 
+export const GET_POST = "GET_POST";
+export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
+export const GET_POST_FAILURE = "GET_POST_FAILURE";
+
+export const getPost = id => dispatch => {
+  dispatch({ type: GET_POST})
+  axios.get(`https://restaurant-passport2019.herokuapp.com/restaurants/${id}`)
+  .then(res => {
+    console.log(res);
+    dispatch({ type: GET_POST_SUCCESS, payload: res.data.data })
+  })
+  .catch(err => {
+    console.log(err)
+    dispatch({ type: GET_POST_FAILURE, payload: err.message })
+  })
+}
+
 export const ADD_POST = "ADD_POST";
 export const ADD_POST_SUCCESS = " ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
