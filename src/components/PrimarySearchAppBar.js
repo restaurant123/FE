@@ -17,7 +17,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button'
-// import FormDialog from './FormDialog(login)';
+import FormDialog from './FormDialog(login)';
+
 
 const styles = theme => ({
   root: {
@@ -96,6 +97,11 @@ class PrimarySearchAppBar extends React.Component {
     catalogCards: [],
     filteredCards: []
   };
+  
+  componentDidMount() {
+    this.setState({ catalogCards: this.props.allPosts})
+    console.log(this.state.catalogCards)
+  }
 
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -113,7 +119,7 @@ class PrimarySearchAppBar extends React.Component {
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
-  searchHandler = (e) => {
+  searchHandler = e => {
     const filtered = this.state.catalogCards.filter(card => {  
       return card.h2.toLowerCase().includes(e.target.value.toLowerCase()) || card.p.toLowerCase().includes(e.target.value.toLowerCase()) 
     })
@@ -181,32 +187,36 @@ class PrimarySearchAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Restaurant Passport 
+              Restaurant Passport
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            <div className='searchBar'>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  onChange={this.searchHandler}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                onChange={this.searchHandler}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-            <FormDialog />
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              <div className='rightNav'>
+              <FormDialog />
+                <IconButton
+                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
