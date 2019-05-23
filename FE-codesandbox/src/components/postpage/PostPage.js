@@ -13,6 +13,7 @@ class PostPage extends Component {
       image: '',
       description:'',
       visited:'',
+      stars:''
     }
   }
 
@@ -25,7 +26,7 @@ class PostPage extends Component {
       const thisPost = this.props.posts.find(post => post.id === this.props.match.params.id)
       this.setState({ post: {
         name: thisPost.name,
-        visited: thisPost.visited,
+        stars: 5,
         description: thisPost.description,
         location: `${thisPost.city}, ${thisPost.state} ${thisPost.zipCode}`
       } })
@@ -38,7 +39,7 @@ class PostPage extends Component {
       <div className="postpage-container">
         <header className="postpage-header">
           <h2>{this.state.post.name}</h2>
-          <h3>${this.state.post.city}</h3>
+          <h3>${this.state.post.stars}</h3>
           <h4>{this.state.post.visited}</h4>
         </header>
         <article className="postpage-content">
