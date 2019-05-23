@@ -24,7 +24,7 @@ class App extends Component {
           {/* <Route exact path="/postpage" component={MediaCard} /> */}
           <Route exact path="/" component={CatalogGrid} />
           <Route path="/postpages/:id" component={PostPage}/>
-          <Route exact path="/:username" component={ProfilePage}/>
+          <Route exact path="/profile/:id" component={ProfilePage}/>
           <Route path="/postform" component={PostForm}/>
           <Route path="/editform" component={EditForm} />
         </div>

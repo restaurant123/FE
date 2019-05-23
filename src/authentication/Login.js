@@ -28,6 +28,7 @@ class Login extends Component {
         .then(res => {
           console.log(res);
           localStorage.setItem('jwt', res.data.token);
+          localStorage.setItem('userID', res.data);
           // window.location.reload()
           this.props.toggleSignedIn();
           this.props.history.push('/');

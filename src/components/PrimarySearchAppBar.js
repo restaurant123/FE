@@ -149,7 +149,7 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}><Link className='profileLink' to='/profile-page/:id'>Profile</Link></MenuItem>
+        <MenuItem onClick={this.handleMenuClose}><Link className='profileLink' to='/:username/profile'>Profile</Link></MenuItem>
       </Menu>
     );
 
@@ -189,7 +189,7 @@ class PrimarySearchAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className='toolBarStyle'>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
