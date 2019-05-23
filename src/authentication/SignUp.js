@@ -16,8 +16,6 @@ class SignUp extends Component {
     changeHandler = e => this.setState({ [e.target.name]: e.target.value });
     submitDataHandler = e => {
         e.preventDefault();
-        const username = this.state.name;
-        const password = this.state.password;
         const userInfo = {
           "name": this.state.name,
           "email": this.state.email,
@@ -31,7 +29,7 @@ class SignUp extends Component {
         .then(res => {
           console.log(res);
           localStorage.setItem('jwt', res.data.token)
-          window.location.reload()
+          this.props.history.push('/')
         })
         .catch(err => {
           console.log(err);

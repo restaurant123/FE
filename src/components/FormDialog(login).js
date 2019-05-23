@@ -6,8 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { withRouter } from 'react-router-dom';
 
-export default class FormDialog extends React.Component {
+class FormDialog extends React.Component {
   state = {
     open: false,
   };
@@ -25,14 +26,25 @@ export default class FormDialog extends React.Component {
     window.location.reload()
   }
 
+  login = () => {
+    this.props.history.push("/signin")
+  }
+
+
   render() {
     return (
       <div className='signUpBtn'>
         {localStorage.getItem('jwt') ? <Button variant="outlined" color="inherit" onClick={this.logOut}>
           Sign Out
-        </Button> : <Button variant="outlined" color="inherit" onClick={this.handleClickOpen}>
-          Sign Up
-        </Button> }
+          </Button> :
+        <>
+          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.login}>
+            Log In
+          </Button>
+          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.login}>
+            Sign Up
+          </Button>
+        </> }
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -77,3 +89,5 @@ export default class FormDialog extends React.Component {
     );
   }
 }
+
+export default withRouter(FormDialog);
