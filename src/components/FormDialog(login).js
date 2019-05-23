@@ -26,8 +26,12 @@ class FormDialog extends React.Component {
     window.location.reload()
   }
 
-  login = () => {
+  signIn = () => {
     this.props.history.push("/signin")
+  }
+
+  signUp = () => {
+    this.props.history.push("/signup")
   }
 
 
@@ -38,10 +42,10 @@ class FormDialog extends React.Component {
           Sign Out
           </Button> :
         <>
-          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.login}>
+          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.signIn}>
             Log In
           </Button>
-          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.login}>
+          <Button variant="outlined" color="inherit" onClick={this.handleClickOpen} onClick={this.signUp}>
             Sign Up
           </Button>
         </> }

@@ -9,9 +9,8 @@ class Login extends Component {
     constructor() {
         super();
         this.state = {
-            email: "",
-            password: "",
-            isSignedUp: false,
+            username: "",
+            password: ""
         }
     }
 
@@ -35,13 +34,11 @@ class Login extends Component {
           console.log(err);
         })
     }
-    toggler = e => {
-      this.setState({ isSignedUp: !this.state.isSignedUp })
-    }
+   
   render() {
     return (
       <>
-      {this.state.isSignedUp ? <div className='login'>
+      <div className='login'>
         <form className='loginForm' onSubmit={this.submitDataHandler}>
             <h2 className='logo'>Restaurant Passport</h2>
             <input className='loginInput' type='text' placeholder='Email' onChange={this.changeUserNameHandler} required />
@@ -49,9 +46,11 @@ class Login extends Component {
             <button className='loginBtn'>Log In</button>
             <br/>
             <p className='p'>Dont Have an Account?</p>
-            <p className='signUP' onClick={this.toggler} >Sign Up</p>
+              <Link to="/signup">
+              <p className='signUP'>Sign Up</p>
+             </Link>
         </form>
-    </div> : <SignUp toggler={this.toggler} /> }
+   </div>
 
   </>
     )

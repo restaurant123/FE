@@ -20,6 +20,7 @@ class App extends Component {
           <PrimarySearchAppBar/>
           {/* <Route exact path="/signup" component={SignUp} /> */}
           <Route path='/login' component={Login}/>
+          <Route path='/login' component={SignUp}/>
           {/* <Route exact path="/postpage" component={MediaCard} /> */}
           <Route exact path="/" component={CatalogGrid} />
           <Route path="/postpages/:id" component={PostPage}/>
