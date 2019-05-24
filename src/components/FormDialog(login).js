@@ -1,4 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { checkSignIn } from '../actions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,9 +9,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { toggleSignedIn } from '../actions';
 
 class FormDialog extends React.Component {
   state = {
@@ -16,7 +16,7 @@ class FormDialog extends React.Component {
   };
 
   componentDidMount() {
-    this.props.toggleSignedIn();
+    this.props.checkSignIn();
   }
 
   handleClickOpen = () => {
@@ -30,7 +30,7 @@ class FormDialog extends React.Component {
   logOut = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('userID');
-    this.props.toggleSignedIn();
+    this.props.checkSignIn();;
   }
 
   signIn = () => {
@@ -64,7 +64,7 @@ class FormDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
+              To subscribe to our new "Restaurants in Your City" list, please enter your email address here. We will send
               updates occasionally.
             </DialogContentText>
             <TextField
@@ -106,4 +106,4 @@ const mapStateToProps = state => ({
 })
 
 const FormDialogRouter = withRouter(FormDialog);
-export default connect(mapStateToProps, { toggleSignedIn })(FormDialogRouter);
+export default connect(mapStateToProps, { checkSignIn })(FormDialogRouter);

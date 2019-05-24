@@ -22,17 +22,18 @@ class PostPage extends Component {
   state = {
     post: {
       name: '',
-      stars:'',
-      address: '',
       city: '',
-      state: '',
-      image_url: '',
-      category: '',
+      address: '',
       description:'',
       visited:'',
-    
+      image_url: '',
+      location: '',
+      createdBy: ''
+     
     }
   }
+
+  
 
   componentDidMount() {
     if (this.props.post.id !== this.props.match.params.id) {
@@ -47,7 +48,8 @@ class PostPage extends Component {
         description: this.props.post.description,
         visited: this.props.post.visited,
         image_url: this.props.post.image_url,
-        location: `${this.props.post.city}, ${this.props.post.state} ${this.props.post.zipCode}`
+        location: `${this.props.post.city}, ${this.props.post.state} ${this.props.post.zipCode}`,
+        createdBy: this.props.post.createdBy
       }})
     }
   }
@@ -67,7 +69,8 @@ class PostPage extends Component {
         description: post.description,
         visited: post.visited,
         image_url: post.image_url,
-        location: `${post.city}, ${post.state} ${post.zipCode}`
+        location: `${post.city}, ${post.state} ${post.zipCode}`,
+        createdBy: post.createdBy
       } })
     }
   }
@@ -78,6 +81,14 @@ class PostPage extends Component {
       <div className="postpage-container">
         <header className="postpage-header">
           <div className="title-container">
+          {this.state.post.createdBy === localStorage.getItem('userID') && <>
+              <Fab aria-label="Edit" className={classes.edit} component={Link} to='/editform'>
+                <EditIcon></EditIcon>
+              </Fab>
+              <Fab aria-label="Delete" className={classes.remove} onClick={() => this.deletePost(this.props.match.params.id)}>
+                <DeleteIcon />
+              </Fab>
+            </>}
             <h2>{this.state.post.name}</h2>
             <Fab color="secondary" aria-label="Add" size="large" className={classes.fab} component={Link} to="/postform">
               <AddIcon />

@@ -5,26 +5,9 @@ import { editPost,  } from '../../actions';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-   button: {
-    margin: theme.spacing.unit,
-  },
-});
+
 
 class EditForm extends Component {
   state = {
@@ -36,7 +19,8 @@ class EditForm extends Component {
         zipCode: this.props.post.zipCode,
         description: this.props.post.description,
         image_url: this.props.post.image_url,
-        visited: this.props.post.visited
+        visited: this.props.post.visited,
+        id: this.props.post.id
     }
   }
 
@@ -165,17 +149,44 @@ class EditForm extends Component {
           name="visited"
           required
           />
-          <Button variant="contained" color="primary" className={classes.button} onClick={e => this.editPost(e, this.state.post)}>Edit Post</Button>
+          <Button variant="contained" type="submit" color='inherit' className={classes.edit}>Edit Post</Button>
         </form>
       </div>
     );
   }
 }
 
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  dense: {
+    marginTop: 16,
+  },
+  menu: {
+    width: 200,
+  },
+   button: {
+    margin: theme.spacing.unit,
+  },
+  edit: {
+    margin: theme.spacing.unit,
+    backgroundColor: '#ffa500',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: fade('#ffa500', .75),
+    },
+  },
+});
+
 const mapStateToProps = state => ({
-    post: state.post
-  })
+  post: state.post
+})
 
 const EditFormStyles = withStyles(styles)(EditForm);
-
 export default connect(mapStateToProps, { editPost })(EditFormStyles)

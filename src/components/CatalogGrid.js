@@ -10,6 +10,67 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import PrimarySearchAppBar from './PrimarySearchAppBar';
+import Loader from 'react-loader-spinner';
+
+
+class AdvancedGridList extends Component {
+   
+  componentDidMount() {
+    // if (this.props.posts.length === 0) {
+      this.props.getPosts();  
+    // }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.deletingPost && !this.props.deletingPost && !this.props.error) {
+      this.props.getPosts();
+    }
+  }
+
+  filteredPosts = () => {
+    
+  }
+
+  render() {
+    const { classes, posts } = this.props;
+
+    if (this.props.fetchingPosts) {
+      return (
+        <div className="loading">
+          <Loader type="Oval" color="#00bfff" height="150" width="100" />
+        </div>
+      )
+    }
+
+
+    return (
+      <>
+      <div className={classes.root}>
+        <GridList cellHeight={300} spacing={1} className={classes.gridList}>
+        {posts.map(post => (
+          <GridListTile key={post.id} cols={.5} rows={1}  component={Link} to={`/postpages/${post._id}`}>
+            <img src={post.image_url} alt={post.name} />
+              <GridListTileBar
+                title={post.name}
+                titlePosition="top"
+                subtitle={post.city}
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                  <StarBorderIcon />
+                  </IconButton>
+                }
+                actionPosition="left"
+                className={classes.titleBar}
+              />
+            
+          </GridListTile>
+          ))}
+        </GridList>
+      </div>
+      </>
+    );
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -34,53 +95,6 @@ const styles = theme => ({
   },
 });
 
-class AdvancedGridList extends Component {
-   
-  componentDidMount() {
-    if (this.props.posts.length === 0) {
-      this.props.getPosts();  
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.deletingPost && !this.props.deletingPost && !this.props.error) {
-      this.props.getPosts();
-    }
-  }
-
-  render() {
-    const { classes, posts } = this.props;
-
-    return (
-      <>
-      <div className={classes.root}>
-        <GridList cellHeight={300} spacing={1} className={classes.gridList}>
-        {posts.map(post => (
-          <GridListTile key={post.id} cols={.5} rows={1}>
-            <img src={post.image_url} alt={post.name} />
-            <Link to={`/postpages/${post.id}`}>
-              <GridListTileBar
-                title={post.name}
-                titlePosition="top"
-                actionIcon={
-                  <IconButton className={classes.icon}>
-                  <StarBorderIcon />
-                  </IconButton>
-                }
-                actionPosition="left"
-                className={classes.titleBar}
-              />
-            </Link>
-          </GridListTile>
-          ))}
-        </GridList>
-      </div>
-      </>
-    );
-  }
-}
-
-const styledComponent = withStyles(styles)(AdvancedGridList);
 
 const mapStateToProps = state => ({
   posts: state.posts,
@@ -92,5 +106,5 @@ const mapStateToProps = state => ({
 AdvancedGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
+const styledComponent = withStyles(styles)(AdvancedGridList);
 export default connect(mapStateToProps, { getPosts })(styledComponent)

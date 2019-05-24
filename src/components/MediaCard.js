@@ -8,47 +8,60 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
-const styles = {
-  card: {
-    maxWidth: 342.5,
-  },
-  media: {
-    height: 140,
-  },
-};
+import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import red from '@material-ui/core/colors/red';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 function MediaCard(props) {
   const { classes } = props;
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
+        <CardActionArea component={Link} to={`/postpages/${props.id}`}>
+          <CardMedia
+            component="img"
+            className={classes.media}
+            image={props.image}
+            title={props.title}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {props.title}
+            </Typography>
+            <Typography component="p">
+              {props.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      <CardActions className={classes.actions}>
+        <IconButton aria-label="Add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="Share">
+            <ShareIcon />
+          </IconButton>
       </CardActions>
     </Card>
   );
 }
+
+const styles = {
+  card: {
+    width: 342.5,
+    marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  media: {
+    height: 202,
+    width: 342.5,
+  },
+};
 
 MediaCard.propTypes = {
   classes: PropTypes.object.isRequired,

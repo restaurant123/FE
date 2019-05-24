@@ -88,7 +88,7 @@ class ProfilePage extends Component {
     return (
       <div className='profileContainer'>
         <div className='profilePageHeader' >
-            <h2>{`${this.state.user.profile.firstName} ${this.state.user.profile.lastName}`}s Profile Page</h2>
+            <h2>{`${this.state.user.profile.name}`}s Profile Page</h2>
             <img />
         </div>
         {/* onSubmit={this.editSubmitter} */}

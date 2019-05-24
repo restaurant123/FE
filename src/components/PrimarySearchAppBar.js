@@ -18,10 +18,162 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button'
 import FormDialog from './FormDialog(login)';
-import { searchBar, getPosts } from '../actions';
+import { searchBar, getPosts, checkSignIn } from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+
+
+
+class PrimarySearchAppBar extends React.Component {
+  state = {
+    anchorEl: null,
+    mobileMoreAnchorEl: null,
+    searched:''
+  };
+  
+  // componentDidMount() {
+  //   this.setState({ catalogCards: this.props.allPosts})
+  //   console.log(this.state.catalogCards)
+  // }
+
+  handleProfileMenuOpen = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+    this.handleMobileMenuClose();
+  };
+
+  handleMobileMenuOpen = event => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  };
+
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null });
+  };
+
+  searchHandler = e => {
+    this.setState({ ...this.state, [e.target.name]: e.target.value })
+  }
+
+  searchSubmit = (e, searchedPost) => {
+    e.preventDefault();
+    // if (searchedPost.length === 0) {
+    //   this.props.getPosts();
+    // }
+    this.props.searchBar(searchedPost);
+  }
+  
+
+  render() {
+    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { classes } = this.props;
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const renderMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMenuClose}><Link className='profileLink' to={`/profile/${localStorage.getItem('userID')}`}>Profile</Link></MenuItem>
+      </Menu>
+    );
+
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+              <Link to='/' className='passportLink'><span className='logoLink'>Restaurant Passport</span></Link>
+            </Typography>
+            <div className='searchBar'>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <form onChange={e => this.searchSubmit(e, this.state.searched)} onSubmit={e => this.searchSubmit(e, this.state.searched)}>
+                  <InputBase
+                   name="searched"
+                    value={this.state.searched}
+                    placeholder="Search…"
+                    onChange={this.searchHandler}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </form>
+              </div>
+            </div>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <div className='rightNav'>
+              <FormDialog />
+              {this.props.signedIn ? <IconButton
+                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                >
+                 <AccountCircle />
+                </IconButton> : null }
+              </div>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+        {renderMenu}
+        {renderMobileMenu}
+      </div>
+    );
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -85,171 +237,23 @@ const styles = theme => ({
       display: 'flex',
     },
   },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+  profile: {
+    color: '#2c419b',
+    'text-decoration': 'none',
+    'font-weight': 'bold',
+    '&:hover': {
+      color: fade('#2c419b', .75),
     },
   },
 });
 
-class PrimarySearchAppBar extends React.Component {
-  state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null,
-    searched:''
-  };
-  
-  componentDidMount() {
-    this.setState({ catalogCards: this.props.allPosts})
-    console.log(this.state.catalogCards)
-  }
-
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
-
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
-  searchHandler = e => {
-    this.setState({ searched: e.target.value })
-  }
-
-  searchSubmit = (e, searchedPost) => {
-    e.preventDefault();
-    this.props.searchBar(searchedPost);
-    if (searchedPost.length === 0) {
-      this.props.getPosts();
-    }
-  }
-  
-
-  render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}><Link className='profileLink' to={`/profile/${localStorage.getItem('userID')}`}>Profile</Link></MenuItem>
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              <Link to='/' className='passportLink'>Restaurant Passport </Link>
-            </Typography>
-            <div className='searchBar'>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <form onSubmit={e => this.searchSubmit(e, this.state.searched)}>
-                  <InputBase
-                    value={this.state.searched}
-                    placeholder="Search…"
-                    onChange={this.searchHandler}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                  />
-                </form>
-              </div>
-            </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <div className='rightNav'>
-              <FormDialog />
-                <IconButton
-                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              </div>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {renderMenu}
-        {renderMobileMenu}
-      </div>
-    );
-  }
-}
-
-const styledSearchBar = withStyles(styles)(PrimarySearchAppBar);
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({searchBar}, dispatch);
-}
+const mapStateToProps = state => ({
+  signedIn: state.signedIn
+})
 
 PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(null, { searchBar, getPosts })(styledSearchBar);
+const styledSearchBar = withStyles(styles)(PrimarySearchAppBar);
+export default connect(mapStateToProps, { searchBar, getPosts, checkSignIn })(styledSearchBar);
