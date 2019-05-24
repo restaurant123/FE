@@ -5,15 +5,16 @@ import { connect } from 'react-redux';
 import { editProfile } from '../actions';
 
 class ProfilePage extends Component {
-constructor() {
-  super();
+constructor(props) {
+  super(props);
   this.state = {
     profile: {
       isEditing: false,
       name: 'Name Here',
       email: 'Email here',
       password: 'Password here',
-      city: 'City here'
+      city: 'City here',
+      id: this.props.match.params.id
     }
   }
 }
@@ -21,20 +22,20 @@ constructor() {
   editToggler = e => {
     this.setState({ isEditing: !this.state.isEditing })
   }
+  
   editHandler = e => {
-    this.setState({ [e.target.name] : e.target.value })
+    e.preventDefault();
+    this.setState({
+      profile: {
+        [e.target.name]:e.target.value
+      }
+    })
   }
-editSubmitter = e => {
-  e.preventDefault();
-  this.setState({ name: this.state.profile.name })
-  this.setState({ name: this.state.profile.email })
-  this.setState({ name: this.state.profile.password })
-  this.setState({ name: this.state.profile.city })
-}
-editProfile = (e, profile) => {
-  e.preventDefault();
-  this.props.editProfile(profile)
-}
+
+  editProfile = (e, profile) => {
+    e.preventDefault();
+    this.props.editProfile(profile)
+  }
 
   render() {
     return (
@@ -43,7 +44,7 @@ editProfile = (e, profile) => {
             <h2>*USERNAME HERE*</h2>
             <img />
         </div>
-        <form className='profilePage' onSubmit={this.editSubmitter}>
+        <form className='profilePage' onSubmit={e => this.editProfile(e, this.state.profile)}>
           {/* <input placeholder='Username' className='inputField' /> */}
           {this.state.isEditing ? <input onChange={this.editHandler} name='name' placeholder='Name' className='inputField' /> : <p>{this.state.profile.name}</p>}
           {this.state.isEditing ? <input onChange={this.editHandler} name='email' placeholder='Email' className='inputField' /> : <p>{this.state.profile.email}</p>}
