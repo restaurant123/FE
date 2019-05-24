@@ -8,7 +8,6 @@ import ProfilePage from './components/ProfilePage';
 import authenticate from './authentication/authenticate';
 import Login from './authentication/Login';
 import SignUp from './authentication/SignUp';
-import MediaCard from './components/MediaCard';
 import PostForm from './components/postpage/PostForm';
 import EditForm from './components/postpage/EditForm';
 

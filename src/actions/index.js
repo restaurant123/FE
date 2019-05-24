@@ -91,6 +91,22 @@ export const editPost = post => dispatch => {
   })
 }
 
+  //get all active profiles
+export const GET_PROFILE = 'GET_PROFILE';
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
+
+export const getProfile = id => dispatch => {
+    dispatch({ type: GET_PROFILE })
+    axios.get(`https://restaurant-passport2019.herokuapp.com/users/${id}`)
+    .then(res => {
+      dispatch({ type: GET_PROFILE_SUCCESS, payload: res.data.data })
+    })
+    .catch(err => {
+      dispatch({ type: GET_PROFILE_FAILURE, payload: err.message })
+    })
+}
+
   //Edit profile
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
@@ -114,9 +130,52 @@ export const searchBar = search => {
   return { type: SEARCH, payload: search }
 }
 
-export const SIGNEDIN = 'SIGNEDIN';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'
 
-export const toggleSignedIn = () => {
-  return { type: SIGNEDIN, payload: localStorage.getItem('jwt') }
+export const signUp = userInfo => dispatch => {
+  dispatch({ type: SIGN_UP})
+  axios.post('https://restaurant-passport2019.herokuapp.com/users/register', userInfo)
+  .then(res => {
+    dispatch({ type: SIGN_UP_SUCCESS, payload: res.data.token})
+    localStorage.setItem('jwt', res.data.token);
+    localStorage.setItem('userID', res.data.userId);
+  })
+  .catch(err => {
+    dispatch({ type: SIGN_UP_FAILURE, payload: err.message})
+  })
 }
 
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
+
+export const toggleSignedIn = userInfo => dispatch => {
+  dispatch({ type: SIGN_IN})
+  axios.post('https://restaurant-passport2019.herokuapp.com/users/login', userInfo)
+  .then(res => {
+    dispatch({ type: SIGN_IN_SUCCESS, payload: res.data.token})
+    localStorage.setItem('jwt', res.data.token);
+    localStorage.setItem('userID', res.data.userId);
+  })
+  .catch(err => {
+    dispatch({ type: SIGN_IN_FAILURE, payload: err.message})
+  })
+}
+
+export const SIGNED_IN = "SIGNED_IN";
+export const SIGNED_OUT = "SIGNED_OUT";
+
+export const checkSignIn = () => {
+  if (localStorage.getItem('jwt')) {
+    return {type: SIGNED_IN }
+  }
+  return {type: SIGNED_OUT}
+}
+
+export const PROFILE_POSTS = 'PROFILE_POSTS';
+
+export const filterProfile = () => {
+  return {type: PROFILE_POSTS, payload: localStorage.getItem('userID')}
+}
